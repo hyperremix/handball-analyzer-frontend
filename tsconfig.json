@@ -15,10 +15,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
-    "jsx": "react-jsx",
-    "baseUrl": "./src"
+    "jsx": "react",
+    "baseUrl": "./src",
+    "paths": {
+      "@model": ["libs/handball-analyzer-model"]
+    }
   },
-  "include": ["src", "internals/startingTemplate/**/*"],
+  "include": ["src"],
   "ts-node": {
     "compilerOptions": {
       "esModuleInterop": true,

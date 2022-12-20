@@ -1,12 +1,7 @@
-/**
- * Container Generator
- */
-
+import fs from 'fs';
+import inquirer from 'inquirer';
 import { Actions, PlopGeneratorConfig } from 'node-plop';
 import path from 'path';
-import inquirer from 'inquirer';
-
-import { pathExists } from '../utils';
 import { baseGeneratorPath } from '../paths';
 
 inquirer.registerPrompt('directory', require('inquirer-directory'));
@@ -19,10 +14,7 @@ export const enum SliceProptNames {
 
 type Answers = { [P in SliceProptNames]: string };
 
-export const rootStatePath = path.join(
-  __dirname,
-  '../../../src/types/RootState.ts',
-);
+export const rootStatePath = path.join(__dirname, '../../../src/types/RootState.ts');
 
 export const sliceGenerator: PlopGeneratorConfig = {
   description: 'Add a redux toolkit slice',
@@ -45,48 +37,49 @@ export const sliceGenerator: PlopGeneratorConfig = {
       message: 'Do you want sagas for asynchronous flows? (e.g. fetching data)',
     },
   ],
-  actions: data => {
+  actions: (data) => {
     const answers = data as Answers;
 
     const slicePath = `${baseGeneratorPath}/${answers.path}/slice`;
 
-    if (pathExists(slicePath)) {
+    if (fs.existsSync(slicePath)) {
       throw new Error(`Slice '${answers.sliceName}' already exists`);
     }
-    const actions: Actions = [];
+    const actions: Actions = [
+      {
+        type: 'add',
+        path: `${slicePath}/index.ts`,
+        templateFile: './slice/index.ts.hbs',
+        abortOnFail: true,
+      },
+      {
+        type: 'add',
+        path: `${slicePath}/selectors.ts`,
+        templateFile: './slice/selectors.ts.hbs',
+        abortOnFail: true,
+      },
+      {
+        type: 'add',
+        path: `${slicePath}/types.ts`,
+        templateFile: './slice/types.ts.hbs',
+        abortOnFail: true,
+      },
+      {
+        type: 'modify',
+        path: `${rootStatePath}`,
+        pattern: new RegExp(/.*\/\/.*\[IMPORT NEW CONTAINERSTATE ABOVE\].+\n/),
+        templateFile: './slice/importContainerState.hbs',
+        abortOnFail: true,
+      },
+      {
+        type: 'modify',
+        path: `${rootStatePath}`,
+        pattern: new RegExp(/.*\/\/.*\[INSERT NEW REDUCER KEY ABOVE\].+\n/),
+        templateFile: './slice/appendRootState.hbs',
+        abortOnFail: true,
+      },
+    ];
 
-    actions.push({
-      type: 'add',
-      path: `${slicePath}/index.ts`,
-      templateFile: './slice/index.ts.hbs',
-      abortOnFail: true,
-    });
-    actions.push({
-      type: 'add',
-      path: `${slicePath}/selectors.ts`,
-      templateFile: './slice/selectors.ts.hbs',
-      abortOnFail: true,
-    });
-    actions.push({
-      type: 'add',
-      path: `${slicePath}/types.ts`,
-      templateFile: './slice/types.ts.hbs',
-      abortOnFail: true,
-    });
-    actions.push({
-      type: 'modify',
-      path: `${rootStatePath}`,
-      pattern: new RegExp(/.*\/\/.*\[IMPORT NEW CONTAINERSTATE ABOVE\].+\n/),
-      templateFile: './slice/importContainerState.hbs',
-      abortOnFail: true,
-    });
-    actions.push({
-      type: 'modify',
-      path: `${rootStatePath}`,
-      pattern: new RegExp(/.*\/\/.*\[INSERT NEW REDUCER KEY ABOVE\].+\n/),
-      templateFile: './slice/appendRootState.hbs',
-      abortOnFail: true,
-    });
     if (answers.wantSaga) {
       actions.push({
         type: 'add',
