@@ -1,5 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { getLeagues } from 'services/backendClient';
+import { handleSagaError } from 'utils';
 import { leaguesActions as actions } from '.';
 
 function* loadLeagues() {
@@ -7,11 +8,7 @@ function* loadLeagues() {
     const leagues = yield call(getLeagues);
     yield put(actions.loadLeaguesSuccess(leagues));
   } catch (err) {
-    if (err instanceof Error) {
-      yield put(actions.loadLeaguesError(err.toString()));
-    } else {
-      yield put(actions.loadLeaguesError('An unknown error occured.'));
-    }
+    yield handleSagaError(err, actions.loadLeaguesError);
   }
 }
 

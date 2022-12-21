@@ -7,6 +7,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { App } from 'app';
+import { initDayjs } from 'i18n/initDayjs';
 import * as React from 'react';
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
@@ -21,6 +22,8 @@ import './i18n/i18n';
 
 const store = configureAppStore();
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+initDayjs();
 
 root.render(
   <Provider store={store}>

@@ -15,11 +15,13 @@ export const Breadcrumbs = ({ breadcrumbs }: Props) => (
   <MuiBreadcrumbs separator={<Typography>&gt;</Typography>}>
     {breadcrumbs.map(({ label, href }) =>
       href ? (
-        <MuiLink key={label} color="textPrimary" to={href} component={Link} variant="body1">
+        <MuiLink key={label} underline="hover" color="textPrimary" to={href} component={Link}>
           {label}
         </MuiLink>
       ) : (
-        <Typography key={label}>{label}</Typography>
+        <Typography key={label} sx={{ display: 'flex' }}>
+          {label}
+        </Typography>
       ),
     )}
   </MuiBreadcrumbs>

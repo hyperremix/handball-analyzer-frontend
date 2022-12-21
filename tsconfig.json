@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.extend.json",
   "compilerOptions": {
     "noImplicitAny": false,
     "target": "es5",
@@ -16,10 +17,7 @@
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
     "jsx": "react",
-    "baseUrl": "./src",
-    "paths": {
-      "@model": ["libs/handball-analyzer-model"]
-    }
+    "baseUrl": "./src"
   },
   "include": ["src"],
   "ts-node": {

@@ -1,3 +1,20 @@
 {
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "seasonsHeader": "Saisons",
+  "errorLabel": "Fehler",
+  "seasonPageHeader": "Saison",
+  "leaguePageHeader": "Liga",
+  "resultsHeader": "Resultate",
+  "notFoundError": "Es wurden keine Daten gefunden",
+  "leagueTableHeader": "Tabelle",
+  "gamesTableHeader": "Spiele",
+  "gamesShortTableHeader": "Sp",
+  "winsTableHeader": "S",
+  "drawsTableHeader": "U",
+  "lossesTableHeader": "N",
+  "goalsTableHeader": "Tore",
+  "goalsShortTableHeader": "T",
+  "pointsTableHeader": "Punkte",
+  "pointsShortTableHeader": "Pkt",
+  "diffTableHeader": "Diff"
 }

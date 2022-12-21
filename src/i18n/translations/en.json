@@ -1,3 +1,20 @@
 {
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "seasonsHeader": "Seasons",
+  "errorLabel": "Error",
+  "seasonPageHeader": "Season",
+  "leaguePageHeader": "League",
+  "resultsHeader": "Results",
+  "notFoundError": "No data found",
+  "leagueTableHeader": "Standings",
+  "gamesTableHeader": "Games",
+  "gamesShortTableHeader": "Ga",
+  "winsTableHeader": "W",
+  "drawsTableHeader": "D",
+  "lossesTableHeader": "L",
+  "goalsTableHeader": "Goals",
+  "goalsShortTableHeader": "G",
+  "pointsTableHeader": "Points",
+  "pointsShortTableHeader": "Pts",
+  "diffTableHeader": "Diff"
 }

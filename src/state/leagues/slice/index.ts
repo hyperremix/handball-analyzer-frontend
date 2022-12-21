@@ -6,9 +6,11 @@ import { leaguesSaga } from './saga';
 import { LeaguesState } from './types';
 
 export const initialState: LeaguesState = {
-  leagues: [],
-  isLoading: false,
+  leagues: {},
+  isLoading: null,
   error: null,
+  selectedSeason: null,
+  selectedLeagueId: null,
 };
 
 const slice = createSlice({
@@ -19,13 +21,27 @@ const slice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    loadLeaguesSuccess(state, action: PayloadAction<League[]>) {
+    loadLeaguesSuccess(state, { payload: leagues }: PayloadAction<League[]>) {
       state.isLoading = false;
-      state.leagues = action.payload;
+      state.leagues = leagues.reduce((acc, league) => {
+        if (acc[league.season]) {
+          acc[league.season] = [...acc[league.season], league];
+          return acc;
+        }
+
+        acc[league.season] = [league];
+        return acc;
+      }, {} as Record<string, League[]>);
     },
-    loadLeaguesError(state, action: PayloadAction<string>) {
+    loadLeaguesError(state, { payload: error }: PayloadAction<string>) {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = error;
+    },
+    selectSeason(state, action: PayloadAction<string>) {
+      state.selectedSeason = action.payload;
+    },
+    selectLeague(state, action: PayloadAction<string>) {
+      state.selectedLeagueId = action.payload;
     },
   },
 });

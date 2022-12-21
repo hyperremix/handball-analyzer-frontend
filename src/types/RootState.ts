@@ -1,4 +1,6 @@
+import { GamesState } from 'state/games/slice/types';
 import { LeaguesState } from 'state/leagues/slice/types';
+import { TeamsState } from 'state/teams/slice/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 /* 
@@ -7,5 +9,7 @@ import { LeaguesState } from 'state/leagues/slice/types';
 */
 export interface RootState {
   leagues?: LeaguesState;
+  games?: GamesState;
+  teams?: TeamsState;
   // [INSERT NEW REDUCER KEY ABOVE] < Needed for generating containers seamlessly
 }

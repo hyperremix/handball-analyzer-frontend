@@ -9,4 +9,15 @@ export const selectLeagues = createSelector([selectSlice], (state) => state.leag
 
 export const selectIsLeaguesLoading = createSelector([selectSlice], (state) => state.isLoading);
 
-export const selectGetLeaguesError = createSelector([selectSlice], (state) => state.error);
+export const selectLoadLeaguesError = createSelector([selectSlice], (state) => state.error);
+
+export const selectSelectedSeason = createSelector([selectSlice], (state) => state.selectedSeason);
+
+export const selectSelectedSeasonLeagues = createSelector([selectSlice], (state) =>
+  state.selectedSeason ? state.leagues[state.selectedSeason] || [] : [],
+);
+
+export const selectSelectedLeague = createSelector(
+  [selectSlice, selectSelectedSeasonLeagues],
+  (state, leagues) => leagues.find((league) => league.id === state.selectedLeagueId),
+);
