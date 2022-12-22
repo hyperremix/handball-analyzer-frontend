@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useLeaguesSlice } from 'state/leagues/slice';
+import { leaguesActions } from 'state/leagues/slice';
 import {
   selectIsLeaguesLoading,
   selectLeagues,
@@ -16,7 +16,6 @@ import {
 } from 'state/leagues/slice/selectors';
 
 export const Dashboard = () => {
-  const { actions } = useLeaguesSlice();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,11 +29,11 @@ export const Dashboard = () => {
       return;
     }
 
-    dispatch(actions.loadLeagues());
-  }, [dispatch, actions, leagues]);
+    dispatch(leaguesActions.loadLeagues());
+  }, [dispatch, leagues]);
 
   const handleSelectSeason = (season: string) => {
-    dispatch(actions.selectSeason(season));
+    dispatch(leaguesActions.selectSeason(season));
     navigate(`seasons/${season.replace('/', '-')}`);
   };
 

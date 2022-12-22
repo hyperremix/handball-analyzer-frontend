@@ -17,9 +17,26 @@ const slice = createSlice({
   name: 'leagues',
   initialState,
   reducers: {
+    loadAllLeagueData(
+      state,
+      {
+        payload: { leagueId, seasonId },
+      }: PayloadAction<{ seasonId: string | undefined; leagueId: string | undefined }>,
+    ) {
+      if (seasonId) {
+        state.selectedSeason = seasonId.replace('-', '/');
+      }
+
+      if (leagueId) {
+        state.selectedLeagueId = leagueId;
+      }
+    },
     loadLeagues(state) {
       state.isLoading = true;
       state.error = null;
+    },
+    loadLeaguesRedundant(state) {
+      state.isLoading = false;
     },
     loadLeaguesSuccess(state, { payload: leagues }: PayloadAction<League[]>) {
       state.isLoading = false;

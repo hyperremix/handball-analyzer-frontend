@@ -33,36 +33,39 @@ export const LeagueTable = ({ teams }: Props) => {
         <Table>
           <TableHead>
             <TableRow>
-              <LeagueTableCell />
+              <LeagueTableCell sx={{ pt: 0 }} />
               <TableCell
                 sx={{
                   border: 0,
                   px: (theme) => (isSmallScreen ? theme.spacing(1) : theme.spacing(2)),
+                  pt: 0,
                 }}
               />
-              <LeagueTableCell align="right">
+              <LeagueTableCell align="right" sx={{ pt: 0 }}>
                 {isSmallScreen
                   ? t(translations.gamesShortTableHeader)
                   : t(translations.gamesTableHeader)}
               </LeagueTableCell>
-              <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1) }}>
+              <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1), pt: 0 }}>
                 {t(translations.winsTableHeader)}
               </LeagueTableCell>
-              <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1) }}>
+              <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1), pt: 0 }}>
                 {t(translations.drawsTableHeader)}
               </LeagueTableCell>
-              <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1) }}>
+              <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1), pt: 0 }}>
                 {t(translations.lossesTableHeader)}
               </LeagueTableCell>
-              <LeagueTableCell align="center">
+              <LeagueTableCell align="center" sx={{ pt: 0 }}>
                 {isSmallScreen
                   ? t(translations.goalsShortTableHeader)
                   : t(translations.goalsTableHeader)}
               </LeagueTableCell>
               {!isSmallScreen && (
-                <LeagueTableCell align="center">{t(translations.diffTableHeader)}</LeagueTableCell>
+                <LeagueTableCell align="center" sx={{ pt: 0 }}>
+                  {t(translations.diffTableHeader)}
+                </LeagueTableCell>
               )}
-              <LeagueTableCell align="right">
+              <LeagueTableCell align="right" sx={{ pt: 0 }}>
                 {isSmallScreen
                   ? t(translations.pointsShortTableHeader)
                   : t(translations.pointsTableHeader)}

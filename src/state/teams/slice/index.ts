@@ -19,6 +19,9 @@ const slice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
+    loadTeamsRedundant(state) {
+      state.isLoading = false;
+    },
     loadTeamsSuccess(state, { payload: teams }: PayloadAction<Team[]>) {
       state.isLoading = false;
       state.teams = teams;

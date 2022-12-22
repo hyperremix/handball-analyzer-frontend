@@ -1,22 +1,17 @@
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import SportsHandballIcon from '@mui/icons-material/SportsHandball';
 import { AppBar as MuiAppBar, Stack, Toolbar, Typography } from '@mui/material';
-import { translations } from 'i18n/translations';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs, TBreadcrumb } from './Breadcrumbs';
-import { NavigationButton } from './NavigationButton';
 
 type Props = {
   breadcrumbs?: TBreadcrumb[];
+  title?: ReactNode;
 };
 
-export const AppBar = ({ breadcrumbs }: Props) => {
-  const { t } = useTranslation();
-
+export const AppBar = ({ breadcrumbs, title }: Props) => {
   return (
-    <MuiAppBar position="static">
+    <MuiAppBar position="static" sx={{ boxShadow: 0 }}>
       <Toolbar>
         <Stack direction="row" alignItems="center" gap={4}>
           <Stack direction="column">
@@ -30,9 +25,7 @@ export const AppBar = ({ breadcrumbs }: Props) => {
             </Stack>
             {breadcrumbs && <Breadcrumbs breadcrumbs={breadcrumbs} />}
           </Stack>
-          <NavigationButton icon={<DashboardIcon />} to="/">
-            {t(translations.dashboard)}
-          </NavigationButton>
+          {title && <Typography variant="h5">{title}</Typography>}
         </Stack>
       </Toolbar>
     </MuiAppBar>

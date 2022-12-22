@@ -16,5 +16,9 @@
   "goalsShortTableHeader": "G",
   "pointsTableHeader": "Points",
   "pointsShortTableHeader": "Pts",
-  "diffTableHeader": "Diff"
+  "diffTableHeader": "Diff",
+  "statisticsHeader": "Statistics",
+  "playByPlayTabHeader": "Play-By-Play",
+  "rostersTabHeader": "Rosters",
+  "coachesHeader": "Coaches"
 }

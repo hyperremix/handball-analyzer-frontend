@@ -1,13 +1,17 @@
+import { Game, League } from '@model';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { getLeagueGames } from 'services/backendClient';
 import { selectSelectedLeague } from 'state/leagues/slice/selectors';
 import { handleSagaError } from 'utils';
 import { gamesActions as actions } from '.';
+import { selectGames } from './selectors';
 
 function* loadGames() {
-  const selectedLeague = yield select(selectSelectedLeague);
+  const selectedLeague: League | undefined = yield select(selectSelectedLeague);
+  const existingGames: Game[] = yield select(selectGames);
 
-  if (!selectedLeague) {
+  if (!selectedLeague || existingGames.length > 0) {
+    yield put(actions.loadGamesRedundant());
     return;
   }
 

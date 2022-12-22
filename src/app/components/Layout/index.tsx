@@ -1,17 +1,25 @@
-import { Box, Breakpoint, Container } from '@mui/material';
+import { Box, Breakpoint, Container, Divider } from '@mui/material';
 import { TBreadcrumb } from 'app/components/AppBar/Breadcrumbs';
 import React, { ReactNode } from 'react';
 import { AppBar } from '../AppBar';
 
 type Props = {
   breadcrumbs?: TBreadcrumb[];
+  tabs?: ReactNode;
+  title?: ReactNode;
   maxWidth?: Breakpoint;
   children: ReactNode;
 };
 
-export const Layout = ({ breadcrumbs, maxWidth, children }: Props) => (
+export const Layout = ({ breadcrumbs, tabs, title, maxWidth, children }: Props) => (
   <>
-    <AppBar breadcrumbs={breadcrumbs} />
+    <AppBar breadcrumbs={breadcrumbs} title={title} />
+    {tabs && (
+      <>
+        <Divider />
+        <Box sx={{ backgroundColor: (theme) => theme.palette.action.hover }}>{tabs}</Box>
+      </>
+    )}
     <Container maxWidth={maxWidth}>
       <Box my={3}>{children}</Box>
     </Container>

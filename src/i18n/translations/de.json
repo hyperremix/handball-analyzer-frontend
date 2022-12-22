@@ -16,5 +16,9 @@
   "goalsShortTableHeader": "T",
   "pointsTableHeader": "Punkte",
   "pointsShortTableHeader": "Pkt",
-  "diffTableHeader": "Diff"
+  "diffTableHeader": "Diff",
+  "statisticsHeader": "Statistiken",
+  "playByPlayTabHeader": "Spielverlauf",
+  "rostersTabHeader": "Aufstellungen",
+  "coachesHeader": "Trainer"
 }

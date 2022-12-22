@@ -9,6 +9,7 @@ export const initialState: GamesState = {
   games: [],
   isLoading: false,
   error: null,
+  selectedGameId: null,
 };
 
 const slice = createSlice({
@@ -18,6 +19,9 @@ const slice = createSlice({
     loadGames(state) {
       state.isLoading = true;
       state.error = null;
+    },
+    loadGamesRedundant(state) {
+      state.isLoading = false;
     },
     loadGamesSuccess(state, { payload: games }: PayloadAction<Game[]>) {
       state.isLoading = false;
@@ -40,6 +44,9 @@ const slice = createSlice({
     loadGamesError(state, { payload: error }: PayloadAction<string>) {
       state.isLoading = false;
       state.error = error;
+    },
+    selectGame(state, { payload: gameId }: PayloadAction<string>) {
+      state.selectedGameId = gameId;
     },
   },
 });

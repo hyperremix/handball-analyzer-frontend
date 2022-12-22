@@ -18,6 +18,9 @@ export const getLeagueGames = async (leagueId?: string): Promise<Game[]> =>
 export const getLeagueTeams = async (leagueId?: string): Promise<Team[]> =>
   backendClient.get<Team[]>(`/teams${getQueryParams({ leagueId })}`).then(getAxiosData);
 
+export const getLeagueGameEvents = async (leagueId?: string): Promise<Game[]> =>
+  backendClient.get<Game[]>(`/game-events${getQueryParams({ leagueId })}`).then(getAxiosData);
+
 const getAxiosData = <T>(res: AxiosResponse<T>) => res.data;
 
 const getQueryParams = (params: Record<string, string | number | boolean | undefined>) => {
