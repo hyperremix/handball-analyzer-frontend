@@ -1,5 +1,12 @@
 import SportsHandballIcon from '@mui/icons-material/SportsHandball';
-import { AppBar as MuiAppBar, Stack, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar as MuiAppBar,
+  Stack,
+  Theme,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumbs, TBreadcrumb } from './Breadcrumbs';
@@ -10,6 +17,8 @@ type Props = {
 };
 
 export const AppBar = ({ breadcrumbs, title }: Props) => {
+  const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
+
   return (
     <MuiAppBar position="static" sx={{ boxShadow: 0 }}>
       <Toolbar>
@@ -25,7 +34,7 @@ export const AppBar = ({ breadcrumbs, title }: Props) => {
             </Stack>
             {breadcrumbs && <Breadcrumbs breadcrumbs={breadcrumbs} />}
           </Stack>
-          {title && <Typography variant="h5">{title}</Typography>}
+          {title && !isSmallScreen && <Typography variant="h5">{title}</Typography>}
         </Stack>
       </Toolbar>
     </MuiAppBar>

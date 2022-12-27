@@ -3,9 +3,10 @@ import { NotFoundError } from 'app/components/common/NotFoundError';
 import { Layout } from 'app/components/Layout';
 import { translations } from 'i18n/translations';
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { leaguesActions } from 'state/leagues/slice';
 import { selectSelectedSeason, selectSelectedSeasonLeagues } from 'state/leagues/slice/selectors';
 
@@ -13,6 +14,7 @@ export const SeasonPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { seasonId } = useParams();
 
   const selectedSeason = useSelector(selectSelectedSeason);
   const selectedSeasonLeagues = useSelector(selectSelectedSeasonLeagues);
@@ -21,6 +23,11 @@ export const SeasonPage = () => {
     dispatch(leaguesActions.selectLeague(leagueId));
     navigate(`leagues/${leagueId}`);
   };
+
+  useEffect(() => {
+    dispatch(leaguesActions.loadLeagues());
+    dispatch(leaguesActions.selectSeason(seasonId));
+  }, [dispatch, seasonId]);
 
   return (
     <Layout

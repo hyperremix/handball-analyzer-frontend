@@ -1,6 +1,16 @@
 import { GameEventType } from '@model';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Box, IconButton, Stack, Tab, Tabs, Typography } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Skeleton,
+  Stack,
+  Tab,
+  Tabs,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import { GameEventDisplay } from 'app/components/GameEvents/GameEventDisplay';
 import { GameResultRow } from 'app/components/GameResults/GameResultRow';
 import { HalftimeSummary } from 'app/components/HalftimeSummary';
@@ -13,18 +23,19 @@ import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { selectGamesGameEvents } from 'state/gameEvents/slice/selectors';
+import { selectGamesGameEvents, selectIsGameEventsLoading } from 'state/gameEvents/slice/selectors';
 import { TEnrichedGameEvent } from 'state/gameEvents/slice/TEnrichedGameEvent';
-import { selectSelectedGame } from 'state/games/slice/selectors';
+import { gamesActions } from 'state/games/slice';
+import { selectIsGamesLoading, selectSelectedGame } from 'state/games/slice/selectors';
 import { leaguesActions } from 'state/leagues/slice';
 import { selectSelectedLeague, selectSelectedSeason } from 'state/leagues/slice/selectors';
-import { selectTeams } from 'state/teams/slice/selectors';
+import { selectIsTeamsLoading, selectTeams } from 'state/teams/slice/selectors';
 import { a11yProps } from 'utils/a11yProps';
 
 export const GamePage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { seasonId, leagueId } = useParams();
+  const { seasonId, leagueId, gameId } = useParams();
   const navigate = useNavigate();
 
   const selectedSeason = useSelector(selectSelectedSeason);
@@ -32,6 +43,9 @@ export const GamePage = () => {
   const selectedGame = useSelector(selectSelectedGame);
   const teams = useSelector(selectTeams);
   const gameEvents = useSelector(selectGamesGameEvents);
+  const isGamesLoading = useSelector(selectIsGamesLoading);
+  const isTeamsLoading = useSelector(selectIsTeamsLoading);
+  const isGameEventsLoading = useSelector(selectIsGameEventsLoading);
 
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -44,7 +58,7 @@ export const GamePage = () => {
   );
 
   const enrichedGameEvents = useMemo(() => {
-    if (!selectedGame) {
+    if (!selectedGame?.id || Object.keys(gameEvents).length === 0) {
       return { firstHalf: [], secondHalf: [] };
     }
 
@@ -79,9 +93,17 @@ export const GamePage = () => {
       );
   }, [gameEvents, selectedGame, teams]);
 
+  const isLoading = useMemo(
+    () => isGamesLoading || isTeamsLoading || isGameEventsLoading,
+    [isGamesLoading, isTeamsLoading, isGameEventsLoading],
+  );
+
   useEffect(() => {
     dispatch(leaguesActions.loadAllLeagueData({ seasonId, leagueId }));
-  }, [dispatch, seasonId, leagueId]);
+    dispatch(gamesActions.selectGame(gameId));
+  }, [dispatch, seasonId, leagueId, gameId]);
+
+  const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
   return (
     <Layout
@@ -101,54 +123,79 @@ export const GamePage = () => {
       <IconButton onClick={() => navigate(-1)}>
         <ArrowBackIcon fontSize="large" />
       </IconButton>
-      <GameResultRow game={selectedGame} disableClick />
-      <Box sx={{ backgroundColor: (theme) => theme.palette.action.hover }}>
-        <Tabs value={selectedTab} onChange={(_, value) => setSelectedTab(value)} centered>
-          <Tab label={t(translations.playByPlayTabHeader)} {...a11yProps(0)} />
-          <Tab label={t(translations.rostersTabHeader)} {...a11yProps(1)} />
-          <Tab label={t(translations.statisticsHeader)} {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={selectedTab} index={0}>
-        <Stack gap={2} mt={2}>
-          <Stack alignItems="center">
-            {enrichedGameEvents.firstHalf.map((gameEvent) => (
-              <GameEventDisplay
-                gameEvent={gameEvent}
-                homeTeamId={homeTeam?.id}
-                awayTeamId={awayTeam?.id}
-                key={gameEvent.id}
+      {isLoading || !selectedGame ? (
+        <LoadingPlayByPlay />
+      ) : (
+        <>
+          <GameResultRow game={selectedGame} disableClick />
+          <Box sx={{ backgroundColor: (theme) => theme.palette.action.hover }}>
+            <Tabs
+              value={selectedTab}
+              onChange={(_, value) => setSelectedTab(value)}
+              centered
+              variant={isSmallScreen ? 'fullWidth' : 'standard'}
+            >
+              <Tab label={t(translations.playByPlayTabHeader)} {...a11yProps(0)} />
+              <Tab label={t(translations.rostersTabHeader)} {...a11yProps(1)} />
+              <Tab label={t(translations.statisticsHeader)} {...a11yProps(2)} />
+            </Tabs>
+          </Box>
+          <TabPanel value={selectedTab} index={0}>
+            <Stack gap={2} mt={2}>
+              <Stack alignItems="center">
+                {enrichedGameEvents.firstHalf.map((gameEvent) => (
+                  <GameEventDisplay
+                    gameEvent={gameEvent}
+                    homeTeamId={homeTeam?.id}
+                    awayTeamId={awayTeam?.id}
+                    key={gameEvent.id}
+                  />
+                ))}
+              </Stack>
+              <HalftimeSummary
+                title={t(translations.halftime)}
+                gameEvents={enrichedGameEvents.firstHalf}
+                game={selectedGame}
               />
-            ))}
-          </Stack>
-          <HalftimeSummary
-            title={t(translations.halftime)}
-            gameEvents={enrichedGameEvents.firstHalf}
-            game={selectedGame}
-          />
-          <Stack alignItems="center">
-            {enrichedGameEvents.secondHalf.map((gameEvent) => (
-              <GameEventDisplay
-                gameEvent={gameEvent}
-                homeTeamId={homeTeam?.id}
-                awayTeamId={awayTeam?.id}
-                key={gameEvent.id}
+              <Stack alignItems="center">
+                {enrichedGameEvents.secondHalf.map((gameEvent) => (
+                  <GameEventDisplay
+                    gameEvent={gameEvent}
+                    homeTeamId={homeTeam?.id}
+                    awayTeamId={awayTeam?.id}
+                    key={gameEvent.id}
+                  />
+                ))}
+              </Stack>
+              <HalftimeSummary
+                title={t(translations.fulltime)}
+                gameEvents={enrichedGameEvents.secondHalf}
+                game={selectedGame}
               />
-            ))}
-          </Stack>
-          <HalftimeSummary
-            title={t(translations.fulltime)}
-            gameEvents={enrichedGameEvents.secondHalf}
-            game={selectedGame}
-          />
-        </Stack>
-      </TabPanel>
-      <TabPanel value={selectedTab} index={1}>
-        <Stack alignItems="center">
-          <TeamsRosters homeTeam={homeTeam} awayTeam={awayTeam} />
-        </Stack>
-      </TabPanel>
-      <TabPanel value={selectedTab} index={2}></TabPanel>
+            </Stack>
+          </TabPanel>
+          <TabPanel value={selectedTab} index={1}>
+            <Stack alignItems="center">
+              <TeamsRosters homeTeam={homeTeam} awayTeam={awayTeam} />
+            </Stack>
+          </TabPanel>
+          <TabPanel value={selectedTab} index={2}></TabPanel>
+        </>
+      )}
     </Layout>
   );
 };
+
+const LoadingPlayByPlay = () => (
+  <Stack gap={2}>
+    <Skeleton variant="rectangular" animation="wave" height={96} />
+    <Stack gap={2}>
+      <Skeleton variant="rectangular" animation="wave" height={56} />
+      <Skeleton variant="rectangular" animation="wave" height={56} />
+      <Skeleton variant="rectangular" animation="wave" height={56} />
+      <Skeleton variant="rectangular" animation="wave" height={56} />
+      <Skeleton variant="rectangular" animation="wave" height={56} />
+      <Skeleton variant="rectangular" animation="wave" height={56} />
+    </Stack>
+  </Stack>
+);

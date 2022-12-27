@@ -46,7 +46,7 @@ export const TeamsRosters = ({ homeTeam, awayTeam }: Props) => {
       <Stack direction="column" gap={1} ref={homeTeamRef}>
         {sortedHomeTeamPlayers.map((player) => (
           <Stack direction="row" gap={1} key={player.id}>
-            <Stack direction="row">
+            <Stack direction="row" alignItems="center">
               <Typography noWrap fontWeight="bold">
                 {player.number}
               </Typography>
@@ -56,7 +56,7 @@ export const TeamsRosters = ({ homeTeam, awayTeam }: Props) => {
                 </Typography>
               )}
             </Stack>
-            <Typography noWrap>{player.name}</Typography>
+            <Typography>{player.name}</Typography>
           </Stack>
         ))}
         <Typography variant="h5" mt={2}>
@@ -69,7 +69,7 @@ export const TeamsRosters = ({ homeTeam, awayTeam }: Props) => {
       <Stack direction="column" gap={1} ref={awayTeamRef}>
         {sortedAwayTeamPlayers.map((player) => (
           <Stack direction="row" gap={1} key={player.id}>
-            <Stack direction="row">
+            <Stack direction="row" alignItems="center">
               <Typography noWrap fontWeight="bold">
                 {player.number}
               </Typography>
@@ -79,7 +79,7 @@ export const TeamsRosters = ({ homeTeam, awayTeam }: Props) => {
                 </Typography>
               )}
             </Stack>
-            <Typography noWrap>{player.name}</Typography>
+            <Typography>{player.name}</Typography>
           </Stack>
         ))}
         <Typography variant="h5" mt={2}>

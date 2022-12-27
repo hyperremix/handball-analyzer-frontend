@@ -45,8 +45,8 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = error;
     },
-    selectGame(state, { payload: gameId }: PayloadAction<string>) {
-      state.selectedGameId = gameId;
+    selectGame(state, { payload: gameId }: PayloadAction<string | undefined>) {
+      state.selectedGameId = gameId || null;
     },
   },
 });

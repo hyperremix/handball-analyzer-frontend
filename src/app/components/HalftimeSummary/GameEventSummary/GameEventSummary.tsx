@@ -27,11 +27,9 @@ const gameEventIconMap: Record<GameEventType, ReactNode> = {
   [GameEventType.RedCard]: <Box height={20} width={12} mx={0.75} my={0.25} bgcolor="red" />,
 };
 
-export const GameEventSummary = ({ gameEventType, count }: Props) => {
-  return (
-    <Stack alignItems="center">
-      {gameEventIconMap[gameEventType]}
-      <Typography>{count}</Typography>
-    </Stack>
-  );
-};
+export const GameEventSummary = ({ gameEventType, count }: Props) => (
+  <Stack alignItems="center">
+    {gameEventIconMap[gameEventType]}
+    <Typography>{count}</Typography>
+  </Stack>
+);

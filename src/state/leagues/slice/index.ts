@@ -54,8 +54,8 @@ const slice = createSlice({
       state.isLoading = false;
       state.error = error;
     },
-    selectSeason(state, action: PayloadAction<string>) {
-      state.selectedSeason = action.payload;
+    selectSeason(state, action: PayloadAction<string | undefined>) {
+      state.selectedSeason = action.payload ? action.payload.replace('-', '/') : null;
     },
     selectLeague(state, action: PayloadAction<string>) {
       state.selectedLeagueId = action.payload;

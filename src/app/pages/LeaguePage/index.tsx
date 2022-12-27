@@ -1,4 +1,4 @@
-import { Skeleton, Stack, Tab, Tabs, Typography } from '@mui/material';
+import { Skeleton, Stack, Tab, Tabs, Theme, Typography, useMediaQuery } from '@mui/material';
 import { ErrorDisplay } from 'app/components/common/ErrorDisplay';
 import { NotFoundError } from 'app/components/common/NotFoundError';
 import { GameResults } from 'app/components/GameResults';
@@ -72,6 +72,8 @@ export const LeaguePage = () => {
     dispatch(leaguesActions.loadAllLeagueData({ seasonId, leagueId }));
   }, [dispatch, seasonId, leagueId]);
 
+  const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
+
   return (
     <Layout
       breadcrumbs={[
@@ -81,7 +83,12 @@ export const LeaguePage = () => {
       ]}
       title={<Typography variant="h5">{`${selectedSeason} ${selectedLeague?.name}`}</Typography>}
       tabs={
-        <Tabs value={selectedTab} onChange={(_, value) => setSelectedTab(value)} centered>
+        <Tabs
+          value={selectedTab}
+          onChange={(_, value) => setSelectedTab(value)}
+          centered
+          variant={isSmallScreen ? 'fullWidth' : 'standard'}
+        >
           <Tab label={t(translations.leagueTableHeader)} {...a11yProps(0)} />
           <Tab label={t(translations.resultsHeader)} {...a11yProps(1)} />
           <Tab label={t(translations.statisticsHeader)} {...a11yProps(2)} />
@@ -95,27 +102,62 @@ export const LeaguePage = () => {
           ))}
         </Stack>
       )}
-      {isLoading ? (
-        <LoadingView />
-      ) : (
-        <>
-          <TabPanel value={selectedTab} index={0}>
-            <LeagueTable teams={teams} />
-          </TabPanel>
-          <TabPanel value={selectedTab} index={1}>
-            <GameResults games={games} />
-          </TabPanel>
-          <TabPanel value={selectedTab} index={2}></TabPanel>
-        </>
-      )}
+      <TabPanel value={selectedTab} index={0}>
+        {isLoading ? <LoadingLeagueTable /> : <LeagueTable teams={teams} />}
+      </TabPanel>
+      <TabPanel value={selectedTab} index={1}>
+        {isLoading ? <LoadingGameResults /> : <GameResults games={games} />}
+      </TabPanel>
+      <TabPanel value={selectedTab} index={2}></TabPanel>
       {games.length === 0 && teams.length === 0 && isLoading === false && <NotFoundError />}
     </Layout>
   );
 };
 
-const LoadingView = () => (
-  <>
-    <Skeleton variant="rectangular" animation="wave" height={64} />
-    <Skeleton variant="rectangular" animation="wave" height={64} />
-  </>
+const LoadingLeagueTable = () => (
+  <Stack>
+    <Typography variant="h4">
+      <Skeleton animation="wave" width={150} />
+    </Typography>
+    <Stack justifyContent="center" alignItems="flex-end" height={64}>
+      <Typography>
+        <Skeleton animation="wave" width={300} />
+      </Typography>
+    </Stack>
+    <Stack gap={1}>
+      <Skeleton variant="rectangular" animation="wave" height={60} />
+      <Skeleton variant="rectangular" animation="wave" height={60} />
+      <Skeleton variant="rectangular" animation="wave" height={60} />
+      <Skeleton variant="rectangular" animation="wave" height={60} />
+      <Skeleton variant="rectangular" animation="wave" height={60} />
+      <Skeleton variant="rectangular" animation="wave" height={60} />
+      <Skeleton variant="rectangular" animation="wave" height={60} />
+      <Skeleton variant="rectangular" animation="wave" height={60} />
+      <Skeleton variant="rectangular" animation="wave" height={60} />
+    </Stack>
+  </Stack>
+);
+
+const LoadingGameResults = () => (
+  <Stack gap={2}>
+    <Typography variant="h4">
+      <Skeleton animation="wave" width={150} />
+    </Typography>
+    <Stack gap={2}>
+      <Typography>
+        <Skeleton animation="wave" width={120} />
+      </Typography>
+      <Stack gap={1}>
+        <Skeleton variant="rectangular" animation="wave" height={48} />
+        <Skeleton variant="rectangular" animation="wave" height={48} />
+      </Stack>
+      <Typography>
+        <Skeleton animation="wave" width={120} />
+      </Typography>
+      <Stack gap={1}>
+        <Skeleton variant="rectangular" animation="wave" height={48} />
+        <Skeleton variant="rectangular" animation="wave" height={48} />
+      </Stack>
+    </Stack>
+  </Stack>
 );

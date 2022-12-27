@@ -1,5 +1,5 @@
 import { Game, GameEventType } from '@model';
-import { Divider, Stack, Typography } from '@mui/material';
+import { Divider, Stack, Theme, Typography, useMediaQuery } from '@mui/material';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { TEnrichedGameEvent } from 'state/gameEvents/slice/TEnrichedGameEvent';
@@ -22,12 +22,19 @@ export const HalftimeSummary = ({ title, gameEvents, game }: Props) => {
     [gameEvents, game],
   );
 
+  const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
+
   return (
     <Stack>
       <Stack alignItems="center" gap={2}>
         <Typography variant="h3">{title}</Typography>
-        <Stack direction="row" justifyContent="center" alignItems="center" gap={8}>
-          <Stack direction="row" justifyContent="center" alignItems="center" gap={1}>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+          gap={isSmallScreen ? 4 : 8}
+        >
+          <Stack direction="row" justifyContent="center" alignItems="center" gap={0.25}>
             {Object.keys(GameEventType).map((type) => (
               <GameEventSummary
                 key={type}
@@ -36,7 +43,7 @@ export const HalftimeSummary = ({ title, gameEvents, game }: Props) => {
               />
             ))}
           </Stack>
-          <Stack direction="row" justifyContent="center" alignItems="center" gap={1}>
+          <Stack direction="row" justifyContent="center" alignItems="center" gap={0.25}>
             {Object.keys(GameEventType).map((type) => (
               <GameEventSummary
                 key={type}

@@ -25,12 +25,8 @@ export const Dashboard = () => {
   const error = useSelector(selectLoadLeaguesError);
 
   useEffect(() => {
-    if (Object.keys(leagues).length > 0) {
-      return;
-    }
-
     dispatch(leaguesActions.loadLeagues());
-  }, [dispatch, leagues]);
+  }, [dispatch]);
 
   const handleSelectSeason = (season: string) => {
     dispatch(leaguesActions.selectSeason(season));
