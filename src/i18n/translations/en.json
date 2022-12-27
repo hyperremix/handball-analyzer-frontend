@@ -20,5 +20,7 @@
   "statisticsHeader": "Statistics",
   "playByPlayTabHeader": "Play-By-Play",
   "rostersTabHeader": "Rosters",
-  "coachesHeader": "Coaches"
+  "coachesHeader": "Coaches",
+  "halftime": "Halftime",
+  "fulltime": "Fulltime"
 }

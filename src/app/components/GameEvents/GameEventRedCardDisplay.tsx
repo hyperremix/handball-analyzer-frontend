@@ -11,9 +11,9 @@ type Props = {
 export const GameEventRedCardDisplay = ({ gameEvent, homeTeamId, awayTeamId }: Props) => {
   return (
     <Stack direction="row" alignItems="center" gap={1}>
-      {gameEvent.teamId === awayTeamId && <Box height={20} width={12} bgcolor="red" />}
+      {gameEvent.teamId === awayTeamId && <Box height={20} width={12} mx={0.75} bgcolor="red" />}
       <Typography>{`${gameEvent.player?.number} ${gameEvent.player?.name}`}</Typography>
-      {gameEvent.teamId === homeTeamId && <Box height={20} width={12} bgcolor="red" />}
+      {gameEvent.teamId === homeTeamId && <Box height={20} width={12} mx={0.75} bgcolor="red" />}
     </Stack>
   );
 };

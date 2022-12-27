@@ -3,6 +3,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box, IconButton, Stack, Tab, Tabs, Typography } from '@mui/material';
 import { GameEventDisplay } from 'app/components/GameEvents/GameEventDisplay';
 import { GameResultRow } from 'app/components/GameResults/GameResultRow';
+import { HalftimeSummary } from 'app/components/HalftimeSummary';
 import { Layout } from 'app/components/Layout';
 import { TabPanel } from 'app/components/TabPanel';
 import { TeamsRosters } from 'app/components/TeamsRosters';
@@ -44,7 +45,7 @@ export const GamePage = () => {
 
   const enrichedGameEvents = useMemo(() => {
     if (!selectedGame) {
-      return [];
+      return { firstHalf: [], secondHalf: [] };
     }
 
     return gameEvents[selectedGame?.id]
@@ -60,7 +61,22 @@ export const GamePage = () => {
               : team?.players.find((player) => player.id === gameEvent.playerId),
         };
       })
-      .sort((a, b) => a.elapsedSeconds - b.elapsedSeconds) as TEnrichedGameEvent[];
+      .sort((a, b) => a.elapsedSeconds - b.elapsedSeconds)
+      .reduce(
+        (acc, gameEvent) => {
+          if (gameEvent.elapsedSeconds < 1800) {
+            acc.firstHalf.push(gameEvent as TEnrichedGameEvent);
+          } else {
+            acc.secondHalf.push(gameEvent as TEnrichedGameEvent);
+          }
+
+          return acc;
+        },
+        { firstHalf: [], secondHalf: [] } as {
+          firstHalf: TEnrichedGameEvent[];
+          secondHalf: TEnrichedGameEvent[];
+        },
+      );
   }, [gameEvents, selectedGame, teams]);
 
   useEffect(() => {
@@ -94,15 +110,37 @@ export const GamePage = () => {
         </Tabs>
       </Box>
       <TabPanel value={selectedTab} index={0}>
-        <Stack alignItems="center" mt={2}>
-          {enrichedGameEvents.map((gameEvent) => (
-            <GameEventDisplay
-              gameEvent={gameEvent}
-              homeTeamId={homeTeam?.id}
-              awayTeamId={awayTeam?.id}
-              key={gameEvent.id}
-            />
-          ))}
+        <Stack gap={2} mt={2}>
+          <Stack alignItems="center">
+            {enrichedGameEvents.firstHalf.map((gameEvent) => (
+              <GameEventDisplay
+                gameEvent={gameEvent}
+                homeTeamId={homeTeam?.id}
+                awayTeamId={awayTeam?.id}
+                key={gameEvent.id}
+              />
+            ))}
+          </Stack>
+          <HalftimeSummary
+            title={t(translations.halftime)}
+            gameEvents={enrichedGameEvents.firstHalf}
+            game={selectedGame}
+          />
+          <Stack alignItems="center">
+            {enrichedGameEvents.secondHalf.map((gameEvent) => (
+              <GameEventDisplay
+                gameEvent={gameEvent}
+                homeTeamId={homeTeam?.id}
+                awayTeamId={awayTeam?.id}
+                key={gameEvent.id}
+              />
+            ))}
+          </Stack>
+          <HalftimeSummary
+            title={t(translations.fulltime)}
+            gameEvents={enrichedGameEvents.secondHalf}
+            game={selectedGame}
+          />
         </Stack>
       </TabPanel>
       <TabPanel value={selectedTab} index={1}>
