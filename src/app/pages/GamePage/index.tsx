@@ -101,7 +101,7 @@ export const GamePage = () => {
       <IconButton onClick={() => navigate(-1)}>
         <ArrowBackIcon fontSize="large" />
       </IconButton>
-      <GameResultRow game={selectedGame} />
+      <GameResultRow game={selectedGame} disableClick />
       <Box sx={{ backgroundColor: (theme) => theme.palette.action.hover }}>
         <Tabs value={selectedTab} onChange={(_, value) => setSelectedTab(value)} centered>
           <Tab label={t(translations.playByPlayTabHeader)} {...a11yProps(0)} />
