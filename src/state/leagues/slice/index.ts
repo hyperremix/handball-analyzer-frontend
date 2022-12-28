@@ -11,6 +11,7 @@ export const initialState: LeaguesState = {
   error: null,
   selectedSeason: null,
   selectedLeagueId: null,
+  selectedTab: 0,
 };
 
 const slice = createSlice({
@@ -59,6 +60,9 @@ const slice = createSlice({
     },
     selectLeague(state, action: PayloadAction<string>) {
       state.selectedLeagueId = action.payload;
+    },
+    selectTab: (state, { payload }: PayloadAction<number>) => {
+      state.selectedTab = payload;
     },
   },
 });

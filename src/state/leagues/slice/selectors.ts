@@ -21,3 +21,5 @@ export const selectSelectedLeague = createSelector(
   [selectSlice, selectSelectedSeasonLeagues],
   (state, leagues) => leagues.find((league) => league.id === state.selectedLeagueId),
 );
+
+export const selectSelectedLeagueTab = createSelector([selectSlice], (state) => state.selectedTab);

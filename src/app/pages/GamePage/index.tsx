@@ -135,9 +135,9 @@ export const GamePage = () => {
               centered
               variant={isSmallScreen ? 'fullWidth' : 'standard'}
             >
-              <Tab label={t(translations.playByPlayTabHeader)} {...a11yProps(0)} />
-              <Tab label={t(translations.rostersTabHeader)} {...a11yProps(1)} />
-              <Tab label={t(translations.statisticsHeader)} {...a11yProps(2)} />
+              {gameTabs.map((label, gameTab) => (
+                <Tab key={gameTab} label={t(label)} aria-label={t(label)} {...a11yProps(gameTab)} />
+              ))}
             </Tabs>
           </Box>
           <TabPanel value={selectedTab} index={0}>
@@ -199,3 +199,9 @@ const LoadingPlayByPlay = () => (
     </Stack>
   </Stack>
 );
+
+export const gameTabs = [
+  translations.playByPlayTabHeader,
+  translations.rostersTabHeader,
+  translations.statisticsHeader,
+];

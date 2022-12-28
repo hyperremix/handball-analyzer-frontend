@@ -7,7 +7,7 @@ import { LeagueTable } from 'app/components/LeagueTable';
 import { TabPanel } from 'app/components/TabPanel';
 import { translations } from 'i18n/translations';
 import * as React from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { SyntheticEvent, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -22,7 +22,11 @@ import {
   selectLoadGamesError,
 } from 'state/games/slice/selectors';
 import { leaguesActions } from 'state/leagues/slice';
-import { selectSelectedLeague, selectSelectedSeason } from 'state/leagues/slice/selectors';
+import {
+  selectSelectedLeague,
+  selectSelectedLeagueTab,
+  selectSelectedSeason,
+} from 'state/leagues/slice/selectors';
 import {
   selectIsTeamsLoading,
   selectLoadTeamsError,
@@ -46,8 +50,7 @@ export const LeaguePage = () => {
   const playersGameEvents = useSelector(selectPlayersGameEvents);
   const isGameEventsLoading = useSelector(selectIsGameEventsLoading);
   const gameEventsError = useSelector(selectLoadGameEventsError);
-
-  const [selectedTab, setSelectedTab] = useState(0);
+  const selectedTab = useSelector(selectSelectedLeagueTab);
 
   const isLoading = useMemo(
     () => isGamesLoading || isTeamsLoading || isGameEventsLoading,
@@ -74,6 +77,10 @@ export const LeaguePage = () => {
 
   const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
+  const handleChangeTab = (_: SyntheticEvent, newTab: number) => {
+    dispatch(leaguesActions.selectTab(newTab));
+  };
+
   return (
     <Layout
       breadcrumbs={[
@@ -85,13 +92,19 @@ export const LeaguePage = () => {
       tabs={
         <Tabs
           value={selectedTab}
-          onChange={(_, value) => setSelectedTab(value)}
+          onChange={handleChangeTab}
           centered
           variant={isSmallScreen ? 'fullWidth' : 'standard'}
         >
-          <Tab label={t(translations.leagueTableHeader)} {...a11yProps(0)} />
-          <Tab label={t(translations.resultsHeader)} {...a11yProps(1)} />
-          <Tab label={t(translations.statisticsHeader)} {...a11yProps(2)} />
+          {leagueTabs.map((label, leagueTab) => (
+            <Tab
+              key={leagueTab}
+              label={t(label)}
+              aria-label={t(label)}
+              value={leagueTab}
+              {...a11yProps(leagueTab)}
+            />
+          ))}
         </Tabs>
       }
     >
@@ -161,3 +174,9 @@ const LoadingGameResults = () => (
     </Stack>
   </Stack>
 );
+
+export const leagueTabs = [
+  translations.leagueTableHeader,
+  translations.resultsHeader,
+  translations.statisticsHeader,
+];

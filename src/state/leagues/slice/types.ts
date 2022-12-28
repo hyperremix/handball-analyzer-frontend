@@ -6,4 +6,5 @@ export type LeaguesState = {
   error: string | null;
   selectedSeason: string | null;
   selectedLeagueId: string | null;
+  selectedTab: number;
 };
