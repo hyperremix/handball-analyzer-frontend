@@ -22,5 +22,6 @@
   "rostersTabHeader": "Aufstellungen",
   "coachesHeader": "Trainer",
   "halftime": "Halbzeit",
-  "fulltime": "Vollzeit"
+  "fulltime": "Spielende",
+  "referees": "Schiedsrichter"
 }

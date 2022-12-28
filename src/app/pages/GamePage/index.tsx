@@ -15,8 +15,8 @@ import { GameEventDisplay } from 'app/components/GameEvents/GameEventDisplay';
 import { GameResultRow } from 'app/components/GameResults/GameResultRow';
 import { HalftimeSummary } from 'app/components/HalftimeSummary';
 import { Layout } from 'app/components/Layout';
+import { Rosters } from 'app/components/Rosters';
 import { TabPanel } from 'app/components/TabPanel';
-import { TeamsRosters } from 'app/components/TeamsRosters';
 import { translations } from 'i18n/translations';
 import * as React from 'react';
 import { useEffect, useMemo, useState } from 'react';
@@ -176,7 +176,7 @@ export const GamePage = () => {
           </TabPanel>
           <TabPanel value={selectedTab} index={1}>
             <Stack alignItems="center">
-              <TeamsRosters homeTeam={homeTeam} awayTeam={awayTeam} />
+              <Rosters homeTeam={homeTeam} awayTeam={awayTeam} referees={selectedGame.referees} />
             </Stack>
           </TabPanel>
           <TabPanel value={selectedTab} index={2}></TabPanel>
