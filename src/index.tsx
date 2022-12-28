@@ -7,7 +7,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { App } from 'app';
+import { environment } from 'environment';
 import { initDayjs } from 'i18n/initDayjs';
+import { IKContext } from 'imagekitio-react';
 import * as React from 'react';
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
@@ -30,7 +32,9 @@ root.render(
     <HelmetProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App />
+        <IKContext urlEndpoint={environment.IMAGEKIT_URL}>
+          <App />
+        </IKContext>
       </ThemeProvider>
     </HelmetProvider>
   </Provider>,

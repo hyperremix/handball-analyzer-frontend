@@ -127,7 +127,7 @@ export const GamePage = () => {
         <LoadingPlayByPlay />
       ) : (
         <>
-          <GameResultRow game={selectedGame} disableClick />
+          <GameResultRow game={selectedGame} disableClick size="large" />
           <Box sx={{ backgroundColor: (theme) => theme.palette.action.hover }}>
             <Tabs
               value={selectedTab}

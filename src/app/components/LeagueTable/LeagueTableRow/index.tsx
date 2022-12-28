@@ -1,5 +1,6 @@
 import { GameEventType, Team } from '@model';
-import { TableCell, TableRow, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Stack, TableCell, TableRow, Theme, Typography, useMediaQuery } from '@mui/material';
+import { IKImage } from 'imagekitio-react';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { LeagueTableCell } from './LeagueTableCell';
@@ -30,22 +31,37 @@ export const LeagueTableRow = ({ index, team }: Props) => {
           px: (theme) => (isSmallScreen ? theme.spacing(1) : theme.spacing(2)),
         }}
       >
-        {team.name}
+        <Stack direction="row" alignItems="center" gap={1}>
+          <IKImage
+            path={`/teams/${team.id}.png`}
+            transformation={[
+              {
+                width: '45',
+                height: '45',
+              },
+            ]}
+            lqip={{ active: true }}
+            loading="lazy"
+          />
+          <Typography>{team.name}</Typography>
+        </Stack>
       </TableCell>
       <LeagueTableCell align="right">
         <Typography fontWeight="bold">{games}</Typography>
       </LeagueTableCell>
       <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1) }}>
-        {team.stats.wins}
+        <Typography>{team.stats.wins}</Typography>
       </LeagueTableCell>
       <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1) }}>
-        {team.stats.draws}
+        <Typography>{team.stats.draws}</Typography>
       </LeagueTableCell>
       <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1) }}>
-        {team.stats.losses}
+        <Typography>{team.stats.losses}</Typography>
       </LeagueTableCell>
       <LeagueTableCell align="center">
-        {`${team.stats.gameEvents[GameEventType.Goal]}:${team.stats.concededGoals}`}
+        <Typography>{`${team.stats.gameEvents[GameEventType.Goal]}:${
+          team.stats.concededGoals
+        }`}</Typography>
       </LeagueTableCell>
       {!isSmallScreen && (
         <LeagueTableCell align="center">

@@ -42,33 +42,40 @@ export const LeagueTable = ({ teams }: Props) => {
                 }}
               />
               <LeagueTableCell align="right" sx={{ pt: 0 }}>
-                {isSmallScreen
-                  ? t(translations.gamesShortTableHeader)
-                  : t(translations.gamesTableHeader)}
+                <Typography>
+                  {isSmallScreen
+                    ? t(translations.gamesShortTableHeader)
+                    : t(translations.gamesTableHeader)}
+                </Typography>
               </LeagueTableCell>
               <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1), pt: 0 }}>
-                {t(translations.winsTableHeader)}
+                <Typography>{t(translations.winsTableHeader)}</Typography>
               </LeagueTableCell>
               <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1), pt: 0 }}>
-                {t(translations.drawsTableHeader)}
+                <Typography>{t(translations.drawsTableHeader)}</Typography>
               </LeagueTableCell>
               <LeagueTableCell align="center" sx={{ px: (theme) => theme.spacing(1), pt: 0 }}>
-                {t(translations.lossesTableHeader)}
+                <Typography>{t(translations.lossesTableHeader)}</Typography>
               </LeagueTableCell>
               <LeagueTableCell align="center" sx={{ pt: 0 }}>
-                {isSmallScreen
-                  ? t(translations.goalsShortTableHeader)
-                  : t(translations.goalsTableHeader)}
+                <Typography>
+                  {isSmallScreen
+                    ? t(translations.goalsShortTableHeader)
+                    : t(translations.goalsTableHeader)}
+                </Typography>
               </LeagueTableCell>
               {!isSmallScreen && (
                 <LeagueTableCell align="center" sx={{ pt: 0 }}>
+                  <Typography></Typography>
                   {t(translations.diffTableHeader)}
                 </LeagueTableCell>
               )}
               <LeagueTableCell align="right" sx={{ pt: 0 }}>
-                {isSmallScreen
-                  ? t(translations.pointsShortTableHeader)
-                  : t(translations.pointsTableHeader)}
+                <Typography>
+                  {isSmallScreen
+                    ? t(translations.pointsShortTableHeader)
+                    : t(translations.pointsTableHeader)}
+                </Typography>
               </LeagueTableCell>
             </TableRow>
           </TableHead>

@@ -6563,6 +6563,19 @@ ignore@^5.1.1, ignore@^5.2.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.1.tgz#c2b1f76cb999ede1502f3a226a9310fdfe88d46c"
   integrity sha512-d2qQLzTJ9WxQftPAuEQpSPmKqzxePjzVbpAVv62AQ64NTL+wR4JkrVqR/LqFsFEUsHDAiId52mJteHDFuDkElA==
 
+imagekit-javascript@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/imagekit-javascript/-/imagekit-javascript-1.5.4.tgz#0b95852fdb58a464a5e39affec827048867298f5"
+  integrity sha512-TPwiq8EkOCOzG02DvuAoo76pOKakutExGD3JScpOUTejpoVO1W6X0XvWHBWLJY9LWE5Yf+gE/RP1ZzCgAFT/UA==
+
+imagekitio-react@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/imagekitio-react/-/imagekitio-react-2.0.0.tgz#36361612e6455f0a36a696b1b39d40f5b17f703c"
+  integrity sha512-CBZ8Y43RgzHenqRj3nRA9MZVQbmUATxwFoyfrDXNRomT9i6EabG0582e7zl/cmODAfcSfW0dA8Oyz19HyfP+EA==
+  dependencies:
+    imagekit-javascript "^1.5.4"
+    prop-types "^15.7.2"
+
 immer@^9.0.7:
   version "9.0.16"
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.16.tgz#8e7caab80118c2b54b37ad43e05758cdefad0198"
