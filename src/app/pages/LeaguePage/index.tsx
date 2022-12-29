@@ -56,6 +56,7 @@ export const LeaguePage = () => {
     () => isGamesLoading || isTeamsLoading || isGameEventsLoading,
     [isGamesLoading, isTeamsLoading, isGameEventsLoading],
   );
+
   const errors = useMemo(() => {
     const errors: string[] = [];
     if (loadGamesError) {
@@ -80,6 +81,12 @@ export const LeaguePage = () => {
   const handleChangeTab = (_: SyntheticEvent, newTab: number) => {
     dispatch(leaguesActions.selectTab(newTab));
   };
+
+  const leagueTabs = [
+    translations.leagueTableHeader,
+    translations.resultsHeader,
+    translations.statisticsHeader,
+  ];
 
   return (
     <Layout
@@ -174,9 +181,3 @@ const LoadingGameResults = () => (
     </Stack>
   </Stack>
 );
-
-export const leagueTabs = [
-  translations.leagueTableHeader,
-  translations.resultsHeader,
-  translations.statisticsHeader,
-];

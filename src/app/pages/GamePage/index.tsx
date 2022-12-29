@@ -105,6 +105,12 @@ export const GamePage = () => {
 
   const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
+  const gameTabs = [
+    translations.playByPlayTabHeader,
+    translations.rostersTabHeader,
+    translations.statisticsHeader,
+  ];
+
   return (
     <Layout
       breadcrumbs={[
@@ -199,9 +205,3 @@ const LoadingPlayByPlay = () => (
     </Stack>
   </Stack>
 );
-
-export const gameTabs = [
-  translations.playByPlayTabHeader,
-  translations.rostersTabHeader,
-  translations.statisticsHeader,
-];

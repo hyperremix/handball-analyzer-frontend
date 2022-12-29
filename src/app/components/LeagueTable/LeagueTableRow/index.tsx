@@ -43,7 +43,7 @@ export const LeagueTableRow = ({ index, team }: Props) => {
             lqip={{ active: true }}
             loading="lazy"
           />
-          <Typography>{team.name}</Typography>
+          {!isSmallScreen && <Typography>{team.name}</Typography>}
         </Stack>
       </TableCell>
       <LeagueTableCell align="right">
