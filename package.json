@@ -5,6 +5,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
+    "deploy": "ts-node scripts/upload-to-s3.ts",
     "test": "craco test",
     "eject": "craco eject",
     "start:prod": "yarn run build && serve -s build",
