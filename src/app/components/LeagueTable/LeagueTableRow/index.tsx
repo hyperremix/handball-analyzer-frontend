@@ -1,6 +1,6 @@
 import { GameEventType, Team } from '@model';
 import { Stack, TableCell, TableRow, Theme, Typography, useMediaQuery } from '@mui/material';
-import { IKImage } from 'imagekitio-react';
+import { TeamLogo } from 'app/components/TeamLogo';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { LeagueTableCell } from './LeagueTableCell';
@@ -32,17 +32,7 @@ export const LeagueTableRow = ({ index, team }: Props) => {
         }}
       >
         <Stack direction="row" alignItems="center" gap={1}>
-          <IKImage
-            path={`/teams/${team.id}.png`}
-            transformation={[
-              {
-                width: '45',
-                height: '45',
-              },
-            ]}
-            lqip={{ active: true }}
-            loading="lazy"
-          />
+          <TeamLogo teamId={team.id} />
           {!isSmallScreen && <Typography>{team.name}</Typography>}
         </Stack>
       </TableCell>

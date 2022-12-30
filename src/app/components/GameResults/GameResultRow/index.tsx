@@ -10,7 +10,7 @@ import {
   TypographyProps,
   useMediaQuery,
 } from '@mui/material';
-import { IKImage } from 'imagekitio-react';
+import { TeamLogo } from 'app/components/TeamLogo';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -100,17 +100,7 @@ const GameResultCardContent = ({ game, size }: { game?: Game; size: 'small' | 'l
         {!isSmallScreen && (
           <Typography variant={teamNameSize}>{homeTeam?.name ?? 'N/A'}</Typography>
         )}
-        <IKImage
-          path={`/teams/${homeTeam.id}.png`}
-          transformation={[
-            {
-              width: teamLogoSize,
-              height: teamLogoSize,
-            },
-          ]}
-          lqip={{ active: true }}
-          loading="lazy"
-        />
+        <TeamLogo teamId={homeTeam.id} size={teamLogoSize} />
       </Stack>
       <Stack justifyContent="center" p={1} component={Paper} elevation={5} sx={{ borderRadius: 0 }}>
         <Typography variant={scoreSize}>{game?.fulltimeScore.home}</Typography>
@@ -119,17 +109,7 @@ const GameResultCardContent = ({ game, size }: { game?: Game; size: 'small' | 'l
         <Typography variant={scoreSize}>{game?.fulltimeScore.away}</Typography>
       </Stack>
       <Stack direction="row" alignItems="center" sx={{ flex: 1 }} gap={spacing} p={spacing}>
-        <IKImage
-          path={`/teams/${awayTeam.id}.png`}
-          transformation={[
-            {
-              width: teamLogoSize,
-              height: teamLogoSize,
-            },
-          ]}
-          lqip={{ active: true }}
-          loading="lazy"
-        />
+        <TeamLogo teamId={awayTeam.id} size={teamLogoSize} />
         {!isSmallScreen && (
           <Typography variant={teamNameSize}>{awayTeam?.name ?? 'N/A'}</Typography>
         )}
