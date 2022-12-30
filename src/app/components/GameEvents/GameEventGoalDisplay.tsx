@@ -1,7 +1,8 @@
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import React from 'react';
 import { TEnrichedGameEventGoal } from 'state/gameEvents/slice/TEnrichedGameEvent';
+import { GameEventPlayerName } from './GameEventPlayerName';
 
 type Props = {
   gameEvent: TEnrichedGameEventGoal;
@@ -13,7 +14,7 @@ export const GameEventGoalDisplay = ({ gameEvent, homeTeamId, awayTeamId }: Prop
   return (
     <Stack direction="row" alignItems="center" gap={1}>
       {gameEvent.teamId === awayTeamId && <SportsSoccerIcon />}
-      <Typography>{`${gameEvent.player?.number} ${gameEvent.player?.name}`}</Typography>
+      <GameEventPlayerName number={gameEvent.player?.number} name={gameEvent.player?.name} />
       {gameEvent.teamId === homeTeamId && <SportsSoccerIcon />}
     </Stack>
   );

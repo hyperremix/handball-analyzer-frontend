@@ -27,7 +27,9 @@ const slice = createSlice({
       state.isLoading = false;
       state.games = Object.entries(
         games.reduce((acc, game) => {
-          const date = new Date(game.date).getTime();
+          const datetime = new Date(game.date);
+          datetime.setHours(0, 0, 0, 0);
+          const date = datetime.getTime();
           if (acc[date]) {
             acc[date] = [...acc[date], game];
             return acc;

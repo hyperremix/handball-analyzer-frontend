@@ -3,6 +3,7 @@ import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 import { Stack, Typography } from '@mui/material';
 import React from 'react';
 import { TEnrichedGameEventSevenMeters } from 'state/gameEvents/slice/TEnrichedGameEvent';
+import { GameEventPlayerName } from './GameEventPlayerName';
 
 type Props = {
   gameEvent: TEnrichedGameEventSevenMeters;
@@ -21,7 +22,7 @@ export const GameEventSevenMetersDisplay = ({ gameEvent, homeTeamId, awayTeamId 
           </Typography>
         </>
       )}
-      <Typography>{`${gameEvent.player?.number} ${gameEvent.player?.name}`}</Typography>
+      <GameEventPlayerName number={gameEvent.player?.number} name={gameEvent.player?.name} />
       {gameEvent.teamId === homeTeamId && (
         <>
           <Typography variant="caption" fontWeight="bold">

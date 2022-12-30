@@ -32,9 +32,11 @@ export const HalftimeSummary = ({ title, gameEvents, game }: Props) => {
           direction="row"
           justifyContent="center"
           alignItems="center"
-          gap={isSmallScreen ? 4 : 8}
+          columnGap={8}
+          rowGap={2}
+          flexWrap="wrap"
         >
-          <Stack direction="row" justifyContent="center" alignItems="center" gap={0.25}>
+          <Stack direction="row" justifyContent="center" alignItems="center" gap={0.25} mr="auto">
             {Object.keys(GameEventType).map((type) => (
               <GameEventSummary
                 key={type}
@@ -43,7 +45,7 @@ export const HalftimeSummary = ({ title, gameEvents, game }: Props) => {
               />
             ))}
           </Stack>
-          <Stack direction="row" justifyContent="center" alignItems="center" gap={0.25}>
+          <Stack direction="row" justifyContent="center" alignItems="center" gap={0.25} ml="auto">
             {Object.keys(GameEventType).map((type) => (
               <GameEventSummary
                 key={type}

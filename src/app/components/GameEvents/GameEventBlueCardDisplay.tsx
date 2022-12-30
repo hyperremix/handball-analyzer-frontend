@@ -1,6 +1,7 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import React from 'react';
 import { TEnrichedGameEventBlueCard } from 'state/gameEvents/slice/TEnrichedGameEvent';
+import { GameEventPlayerName } from './GameEventPlayerName';
 
 type Props = {
   gameEvent: TEnrichedGameEventBlueCard;
@@ -12,7 +13,7 @@ export const GameEventBlueCardDisplay = ({ gameEvent, homeTeamId, awayTeamId }: 
   return (
     <Stack direction="row" alignItems="center" gap={1}>
       {gameEvent.teamId === awayTeamId && <Box height={20} width={12} mx={0.75} bgcolor="blue" />}
-      <Typography>{`${gameEvent.player?.number} ${gameEvent.player?.name}`}</Typography>
+      <GameEventPlayerName number={gameEvent.player?.number} name={gameEvent.player?.name} />
       {gameEvent.teamId === homeTeamId && <Box height={20} width={12} mx={0.75} bgcolor="blue" />}
     </Stack>
   );
