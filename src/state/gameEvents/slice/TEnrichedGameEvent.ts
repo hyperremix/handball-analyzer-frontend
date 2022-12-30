@@ -1,5 +1,6 @@
 import {
   BaseGameEvent,
+  GameEventBlueCard,
   GameEventGoal,
   GameEventPenalty,
   GameEventRedCard,
@@ -17,7 +18,8 @@ export type TEnrichedGameEvent =
   | TEnrichedGameEventPenalty
   | TEnrichedGameEventTimeout
   | TEnrichedGameEventYellowCard
-  | TEnrichedGameEventRedCard;
+  | TEnrichedGameEventRedCard
+  | TEnrichedGameEventBlueCard;
 
 export type TBaseEnrichedGameEvent<T extends GameEventType> = BaseGameEvent<T> & {
   team: Team;
@@ -48,5 +50,10 @@ export type TEnrichedGameEventYellowCard = TBaseEnrichedGameEvent<GameEventType.
 
 export type TEnrichedGameEventRedCard = TBaseEnrichedGameEvent<GameEventType.RedCard> &
   GameEventRedCard & {
+    player: Player;
+  };
+
+export type TEnrichedGameEventBlueCard = TBaseEnrichedGameEvent<GameEventType.BlueCard> &
+  GameEventBlueCard & {
     player: Player;
   };

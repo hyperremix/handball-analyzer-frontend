@@ -2,6 +2,7 @@ import { GameEventType } from '@model';
 import { Box, Stack, Typography } from '@mui/material';
 import React, { ReactNode } from 'react';
 import { TEnrichedGameEvent } from 'state/gameEvents/slice/TEnrichedGameEvent';
+import { GameEventBlueCardDisplay } from './GameEventBlueCardDisplay';
 import { GameEventGoalDisplay } from './GameEventGoalDisplay';
 import { GameEventPenaltyDisplay } from './GameEventPenaltyDisplay';
 import { GameEventRedCardDisplay } from './GameEventRedCardDisplay';
@@ -71,6 +72,15 @@ export const GameEventDisplay = ({ gameEvent, homeTeamId, awayTeamId }: Props) =
     case GameEventType.RedCard:
       gameEventDisplay = (
         <GameEventRedCardDisplay
+          gameEvent={gameEvent}
+          homeTeamId={homeTeamId}
+          awayTeamId={awayTeamId}
+        />
+      );
+      break;
+    case GameEventType.BlueCard:
+      gameEventDisplay = (
+        <GameEventBlueCardDisplay
           gameEvent={gameEvent}
           homeTeamId={homeTeamId}
           awayTeamId={awayTeamId}

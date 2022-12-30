@@ -25,6 +25,7 @@ const gameEventIconMap: Record<GameEventType, ReactNode> = {
   [GameEventType.Timeout]: <SnoozeIcon />,
   [GameEventType.YellowCard]: <Box height={20} width={12} mx={0.75} my={0.25} bgcolor="yellow" />,
   [GameEventType.RedCard]: <Box height={20} width={12} mx={0.75} my={0.25} bgcolor="red" />,
+  [GameEventType.BlueCard]: <Box height={20} width={12} mx={0.75} my={0.25} bgcolor="blue" />,
 };
 
 export const GameEventSummary = ({ gameEventType, count }: Props) => (
