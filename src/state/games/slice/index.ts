@@ -38,10 +38,12 @@ const slice = createSlice({
           acc[date] = [game];
           return acc;
         }, {} as Record<number, Game[]>),
-      ).map(([date, games]) => ({
-        date: new Date(Number(date)),
-        games,
-      }));
+      )
+        .map(([date, games]) => ({
+          date: new Date(Number(date)),
+          games,
+        }))
+        .sort((a, b) => b.date.getTime() - a.date.getTime());
     },
     loadGamesError(state, { payload: error }: PayloadAction<string>) {
       state.isLoading = false;

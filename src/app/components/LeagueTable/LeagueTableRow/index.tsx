@@ -31,7 +31,7 @@ export const LeagueTableRow = ({ index, team }: Props) => {
           px: (theme) => (isSmallScreen ? theme.spacing(1) : theme.spacing(2)),
         }}
       >
-        <Stack direction="row" alignItems="center" gap={1}>
+        <Stack direction="row" alignItems="center" gap={2}>
           <TeamLogo teamId={team.id} />
           {!isSmallScreen && <Typography>{team.name}</Typography>}
         </Stack>

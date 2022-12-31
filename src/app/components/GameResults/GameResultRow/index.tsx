@@ -1,5 +1,4 @@
 import { Game } from '@model';
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import {
   Card,
   CardActionArea,
@@ -74,7 +73,7 @@ const GameResultCardContent = ({ game, size }: { game?: Game; size: 'small' | 'l
     [teams, game],
   );
 
-  const { teamLogoSize, teamNameSize, scoreSize, spacing, iconSize } = useMemo(() => {
+  const { teamLogoSize, teamNameSize, scoreSize, spacing } = useMemo(() => {
     return {
       teamLogoSize: size === 'small' || isSmallScreen ? '45' : '75',
       teamNameSize: (size === 'small' || isSmallScreen
@@ -82,38 +81,49 @@ const GameResultCardContent = ({ game, size }: { game?: Game; size: 'small' | 'l
         : 'h5') as TypographyProps['variant'],
       scoreSize: (size === 'small' || isSmallScreen ? 'h6' : 'h3') as TypographyProps['variant'],
       spacing: size === 'small' || isSmallScreen ? 1 : 2,
-      iconSize: (size === 'small' || isSmallScreen ? 'medium' : 'large') as 'medium' | 'large',
     };
   }, [size, isSmallScreen]);
 
   return (
-    <Stack direction="row">
+    <Stack direction="row" gap={spacing}>
       <Stack
         direction="row"
         justifyContent="flex-end"
         alignItems="center"
         sx={{ flex: 1 }}
-        gap={spacing}
+        gap={2}
         p={spacing}
       >
-        {homeTeam.isWinner && <EmojiEventsIcon fontSize={iconSize} />}
         {!isSmallScreen && (
           <Typography variant={teamNameSize}>{homeTeam?.name ?? 'N/A'}</Typography>
         )}
         <TeamLogo teamId={homeTeam.id} size={teamLogoSize} />
       </Stack>
-      <Stack justifyContent="center" p={1} component={Paper} elevation={5} sx={{ borderRadius: 0 }}>
-        <Typography variant={scoreSize}>{game?.fulltimeScore.home}</Typography>
+      <Stack direction="row">
+        <Stack
+          justifyContent="center"
+          p={1}
+          component={Paper}
+          elevation={5}
+          sx={{ borderRadius: 0 }}
+        >
+          <Typography variant={scoreSize}>{game?.fulltimeScore.home}</Typography>
+        </Stack>
+        <Stack
+          justifyContent="center"
+          p={1}
+          component={Paper}
+          elevation={5}
+          sx={{ borderRadius: 0 }}
+        >
+          <Typography variant={scoreSize}>{game?.fulltimeScore.away}</Typography>
+        </Stack>
       </Stack>
-      <Stack justifyContent="center" p={1} component={Paper} elevation={5} sx={{ borderRadius: 0 }}>
-        <Typography variant={scoreSize}>{game?.fulltimeScore.away}</Typography>
-      </Stack>
-      <Stack direction="row" alignItems="center" sx={{ flex: 1 }} gap={spacing} p={spacing}>
+      <Stack direction="row" alignItems="center" sx={{ flex: 1 }} gap={2} p={spacing}>
         <TeamLogo teamId={awayTeam.id} size={teamLogoSize} />
         {!isSmallScreen && (
           <Typography variant={teamNameSize}>{awayTeam?.name ?? 'N/A'}</Typography>
         )}
-        {awayTeam.isWinner && <EmojiEventsIcon />}
       </Stack>
     </Stack>
   );
