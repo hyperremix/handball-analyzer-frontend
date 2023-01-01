@@ -1,6 +1,7 @@
 import { Team } from '@model';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from 'utils/@reduxjs/toolkit';
+import { calculatePoints } from 'utils/calculatePoints';
 import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
 import { teamsSaga } from './saga';
 import { TeamsState } from './types';
@@ -25,7 +26,11 @@ const slice = createSlice({
     loadTeamsSuccess(state, { payload: teams }: PayloadAction<Team[]>) {
       state.isLoading = false;
       state.teams = teams;
-      state.teams.sort((a, b) => b.stats.points - a.stats.points);
+      state.teams.sort((a, b) => {
+        const aPoints = calculatePoints(a.stats);
+        const bPoints = calculatePoints(b.stats);
+        return bPoints.for - aPoints.for || bPoints.against - aPoints.against;
+      });
     },
     loadTeamsError(state, { payload: error }: PayloadAction<string>) {
       state.isLoading = false;

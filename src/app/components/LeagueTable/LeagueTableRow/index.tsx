@@ -3,6 +3,7 @@ import { Stack, TableCell, TableRow, Theme, Typography, useMediaQuery } from '@m
 import { TeamLogo } from 'app/components/TeamLogo';
 import * as React from 'react';
 import { useMemo } from 'react';
+import { calculatePoints } from 'utils/calculatePoints';
 import { LeagueTableCell } from './LeagueTableCell';
 
 type Props = {
@@ -18,6 +19,8 @@ export const LeagueTableRow = ({ index, team }: Props) => {
     () => team.stats.gameEvents[GameEventType.Goal] - team.stats.concededGoals,
     [team],
   );
+
+  const points = useMemo(() => calculatePoints(team.stats), [team]);
 
   return (
     <TableRow hover sx={{ cursor: 'pointer' }}>
@@ -69,7 +72,7 @@ export const LeagueTableRow = ({ index, team }: Props) => {
         </LeagueTableCell>
       )}
       <LeagueTableCell align="right">
-        <Typography variant="h6">{team.stats.points}</Typography>
+        <Typography variant="h6">{`${points.for}:${points.against}`}</Typography>
       </LeagueTableCell>
     </TableRow>
   );
