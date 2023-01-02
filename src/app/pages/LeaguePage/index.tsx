@@ -14,7 +14,6 @@ import { useParams } from 'react-router-dom';
 import {
   selectIsGameEventsLoading,
   selectLoadGameEventsError,
-  selectPlayersGameEvents,
 } from 'state/gameEvents/slice/selectors';
 import {
   selectGames,
@@ -47,7 +46,6 @@ export const LeaguePage = () => {
   const teams = useSelector(selectTeams);
   const isTeamsLoading = useSelector(selectIsTeamsLoading);
   const loadTeamsError = useSelector(selectLoadTeamsError);
-  const playersGameEvents = useSelector(selectPlayersGameEvents);
   const isGameEventsLoading = useSelector(selectIsGameEventsLoading);
   const gameEventsError = useSelector(selectLoadGameEventsError);
   const selectedTab = useSelector(selectSelectedLeagueTab);

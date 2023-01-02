@@ -1,5 +1,5 @@
 import { Game, GameEventType } from '@model';
-import { Divider, Stack, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Divider, Stack, Typography } from '@mui/material';
 import * as React from 'react';
 import { useMemo } from 'react';
 import { TEnrichedGameEvent } from 'state/gameEvents/slice/TEnrichedGameEvent';
@@ -21,8 +21,6 @@ export const HalftimeSummary = ({ title, gameEvents, game }: Props) => {
     () => reduceGameEvents(gameEvents, game?.awayTeamId),
     [gameEvents, game],
   );
-
-  const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
   return (
     <Stack>
