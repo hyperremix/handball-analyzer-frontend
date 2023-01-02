@@ -15,15 +15,25 @@ jobs:
       - run: yarn
       - run: yarn checkTs
       - run: yarn eslint
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
       - if: github.ref == 'refs/heads/main'
         env:
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           REACT_APP_BACKEND_URL: 'https://hujnf3dehe.execute-api.eu-central-1.amazonaws.com'
           REACT_APP_IMAGEKIT_URL: 'https://ik.imagekit.io/hyperremix/handballanalyzer'
-          S3_UPLOAD_FILENAME: 'd3v0e30ub418i3-prod'
+          S3_UPLOAD_FILENAME: 'handball-analyzer-prod.zip'
+          S3_BUCKET_NAME: hyperremix-amplify-deployment
+          AMPLIFY_APP_ID: d3v0e30ub418i3
           SKIP_PREFLIGHT_CHECK: true
         run: |
           yarn build
-          cd build && zip ${S3_UPLOAD_FILENAME}.zip -r . && cd ..
-          yarn deploy
+          cd build && zip $S3_UPLOAD_FILENAME -r .
+          aws s3 cp $S3_UPLOAD_FILENAME s3://$S3_BUCKET_NAME
+          cd ..
+          aws amplify start-deployment \
+            --app-id $AMPLIFY_APP_ID \
+            --branch-name prod \
+            --source-url s3://$S3_BUCKET_NAME/$S3_UPLOAD_FILENAME
