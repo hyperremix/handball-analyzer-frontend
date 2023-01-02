@@ -15,8 +15,20 @@ const s3bucket = new AWS.S3({
 });
 
 const uploadToS3 = (filename: string): Promise<any> => {
-  if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY || !S3_UPLOAD_FILENAME || !BUCKET_NAME) {
-    throw new Error('Missing environment variables');
+  if (!AWS_ACCESS_KEY_ID) {
+    throw new Error('Missing "AWS_ACCESS_KEY_ID" environment variable');
+  }
+
+  if (!AWS_SECRET_ACCESS_KEY) {
+    throw new Error('Missing "AWS_SECRET_ACCESS_KEY" environment variable');
+  }
+
+  if (!S3_UPLOAD_FILENAME) {
+    throw new Error('Missing "S3_UPLOAD_FILENAME" environment variable');
+  }
+
+  if (!BUCKET_NAME) {
+    throw new Error('Missing "BUCKET_NAME" environment variables');
   }
 
   const readStream = fs.createReadStream(`build/${filename}`);
