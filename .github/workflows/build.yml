@@ -17,6 +17,8 @@ jobs:
       - run: yarn eslint
       - if: github.ref == 'refs/heads/main'
         env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           REACT_APP_BACKEND_URL: 'https://hujnf3dehe.execute-api.eu-central-1.amazonaws.com'
           REACT_APP_IMAGEKIT_URL: 'https://ik.imagekit.io/hyperremix/handballanalyzer'
           S3_UPLOAD_FILENAME: 'd3v0e30ub418i3-prod'
