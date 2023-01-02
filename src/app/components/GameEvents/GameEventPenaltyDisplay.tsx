@@ -15,7 +15,10 @@ export const GameEventPenaltyDisplay = ({ gameEvent, homeTeamId, awayTeamId }: P
   return (
     <Stack direction="row" alignItems="center" gap={1}>
       {gameEvent.teamId === awayTeamId && <Icon path={mdiHandPeace} size={1} />}
-      <GameEventPlayerName number={gameEvent.player?.number} name={gameEvent.player?.name} />
+      <GameEventPlayerName
+        number={gameEvent.teamMember?.number}
+        name={gameEvent.teamMember?.name}
+      />
       {gameEvent.teamId === homeTeamId && <Icon path={mdiHandPeace} size={1} />}
     </Stack>
   );

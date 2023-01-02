@@ -1,4 +1,4 @@
-import { Referee, Team } from '@model';
+import { Referee, Team, TeamMemberType } from '@model';
 import { Stack, Typography } from '@mui/material';
 import { translations } from 'i18n/translations';
 import * as React from 'react';
@@ -16,17 +16,15 @@ export const Rosters = ({ homeTeam, awayTeam, referees }: Props) => {
   const homeTeamRef = useRef<HTMLDivElement>(null);
   const awayTeamRef = useRef<HTMLDivElement>(null);
 
-  const sortedHomeTeamPlayers = useMemo(() => {
-    const players = homeTeam?.players.slice() ?? [];
-    players.sort((a, b) => a.number - b.number);
-    return players;
-  }, [homeTeam]);
+  const [sortedHomeTeamPlayers, homeTeamCoaches] = useMemo(
+    () => getTeamPlayersAndCoaches(homeTeam),
+    [homeTeam],
+  );
 
-  const sortedAwayTeamPlayers = useMemo(() => {
-    const players = awayTeam?.players.slice() ?? [];
-    players.sort((a, b) => a.number - b.number);
-    return players;
-  }, [awayTeam]);
+  const [sortedAwayTeamPlayers, awayTeamCoaches] = useMemo(
+    () => getTeamPlayersAndCoaches(awayTeam),
+    [awayTeam],
+  );
 
   useEffect(() => {
     if (!(homeTeamRef.current && awayTeamRef.current)) {
@@ -52,7 +50,7 @@ export const Rosters = ({ homeTeam, awayTeam, referees }: Props) => {
                 <Typography noWrap fontWeight="bold">
                   {player.number}
                 </Typography>
-                {player.number < 10 && (
+                {parseInt(player.number) < 10 && (
                   <Typography noWrap fontWeight="bold" sx={{ visibility: 'hidden' }}>
                     {0}
                   </Typography>
@@ -64,7 +62,7 @@ export const Rosters = ({ homeTeam, awayTeam, referees }: Props) => {
           <Typography variant="h5" mt={2}>
             {t(translations.coachesHeader)}
           </Typography>
-          {homeTeam?.coaches.map((coach) => (
+          {homeTeamCoaches.map((coach) => (
             <Typography key={coach}>{coach}</Typography>
           ))}
         </Stack>
@@ -75,7 +73,7 @@ export const Rosters = ({ homeTeam, awayTeam, referees }: Props) => {
                 <Typography noWrap fontWeight="bold">
                   {player.number}
                 </Typography>
-                {player.number < 10 && (
+                {parseInt(player.number) < 10 && (
                   <Typography noWrap fontWeight="bold" sx={{ visibility: 'hidden' }}>
                     {0}
                   </Typography>
@@ -87,7 +85,7 @@ export const Rosters = ({ homeTeam, awayTeam, referees }: Props) => {
           <Typography variant="h5" mt={2}>
             {t(translations.coachesHeader)}
           </Typography>
-          {awayTeam?.coaches.map((coach) => (
+          {awayTeamCoaches.map((coach) => (
             <Typography key={coach}>{coach}</Typography>
           ))}
         </Stack>
@@ -103,4 +101,18 @@ export const Rosters = ({ homeTeam, awayTeam, referees }: Props) => {
       </Stack>
     </>
   );
+};
+
+const getTeamPlayersAndCoaches = (team?: Team) => {
+  const players =
+    team?.teamMembers.slice().filter((member) => member.type === TeamMemberType.Player) ?? [];
+  players.sort((a, b) => parseInt(a.number) - parseInt(b.number));
+  const coaches =
+    team?.teamMembers
+      .slice()
+      .filter((member) => member.type === TeamMemberType.Coach)
+      .map((member) => member.name) ?? [];
+
+  const uniqueCoaches = coaches.filter((coach, index) => coaches.indexOf(coach) === index) ?? [];
+  return [players, uniqueCoaches];
 };

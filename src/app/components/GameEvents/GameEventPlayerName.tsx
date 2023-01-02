@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import React from 'react';
 
 type Props = {
-  number?: number;
+  number?: string;
   name?: string;
 };
 

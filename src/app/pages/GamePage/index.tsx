@@ -69,10 +69,10 @@ export const GamePage = () => {
         return {
           ...gameEvent,
           team,
-          player:
+          teamMember:
             gameEvent.type === GameEventType.Timeout
               ? undefined
-              : team?.players.find((player) => player.id === gameEvent.playerId),
+              : team?.teamMembers.find((member) => member.id === gameEvent.playerId),
         };
       })
       .sort((a, b) => a.elapsedSeconds - b.elapsedSeconds)

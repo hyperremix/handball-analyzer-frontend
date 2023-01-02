@@ -8,8 +8,8 @@ import {
   GameEventTimeout,
   GameEventType,
   GameEventYellowCard,
-  Player,
   Team,
+  TeamMember,
 } from '@model';
 
 export type TEnrichedGameEvent =
@@ -27,17 +27,17 @@ export type TBaseEnrichedGameEvent<T extends GameEventType> = BaseGameEvent<T> &
 
 export type TEnrichedGameEventGoal = TBaseEnrichedGameEvent<GameEventType.Goal> &
   GameEventGoal & {
-    player: Player;
+    teamMember: TeamMember;
   };
 
 export type TEnrichedGameEventSevenMeters = TBaseEnrichedGameEvent<GameEventType.SevenMeters> &
   GameEventSevenMeters & {
-    player: Player;
+    teamMember: TeamMember;
   };
 
 export type TEnrichedGameEventPenalty = TBaseEnrichedGameEvent<GameEventType.Penalty> &
   GameEventPenalty & {
-    player: Player;
+    teamMember: TeamMember;
   };
 
 export type TEnrichedGameEventTimeout = TBaseEnrichedGameEvent<GameEventType.Timeout> &
@@ -45,15 +45,15 @@ export type TEnrichedGameEventTimeout = TBaseEnrichedGameEvent<GameEventType.Tim
 
 export type TEnrichedGameEventYellowCard = TBaseEnrichedGameEvent<GameEventType.YellowCard> &
   GameEventYellowCard & {
-    player: Player;
+    teamMember: TeamMember;
   };
 
 export type TEnrichedGameEventRedCard = TBaseEnrichedGameEvent<GameEventType.RedCard> &
   GameEventRedCard & {
-    player: Player;
+    teamMember: TeamMember;
   };
 
 export type TEnrichedGameEventBlueCard = TBaseEnrichedGameEvent<GameEventType.BlueCard> &
   GameEventBlueCard & {
-    player: Player;
+    teamMember: TeamMember;
   };

@@ -22,7 +22,10 @@ export const GameEventSevenMetersDisplay = ({ gameEvent, homeTeamId, awayTeamId 
           </Typography>
         </>
       )}
-      <GameEventPlayerName number={gameEvent.player?.number} name={gameEvent.player?.name} />
+      <GameEventPlayerName
+        number={gameEvent.teamMember?.number}
+        name={gameEvent.teamMember?.name}
+      />
       {gameEvent.teamId === homeTeamId && (
         <>
           <Typography variant="caption" fontWeight="bold">

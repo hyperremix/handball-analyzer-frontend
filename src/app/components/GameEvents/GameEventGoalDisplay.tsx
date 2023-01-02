@@ -14,7 +14,10 @@ export const GameEventGoalDisplay = ({ gameEvent, homeTeamId, awayTeamId }: Prop
   return (
     <Stack direction="row" alignItems="center" gap={1}>
       {gameEvent.teamId === awayTeamId && <SportsSoccerIcon />}
-      <GameEventPlayerName number={gameEvent.player?.number} name={gameEvent.player?.name} />
+      <GameEventPlayerName
+        number={gameEvent.teamMember?.number}
+        name={gameEvent.teamMember?.name}
+      />
       {gameEvent.teamId === homeTeamId && <SportsSoccerIcon />}
     </Stack>
   );
